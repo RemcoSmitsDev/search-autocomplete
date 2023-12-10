@@ -1,7 +1,11 @@
+import {
+  ArrowSmallDownIcon,
+  ArrowSmallUpIcon,
+} from "@heroicons/react/24/solid";
 import * as Portal from "@radix-ui/react-portal";
 import { useIsFetching } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { ClientOnly } from "remix-utils/client-only";
 import AutoCompleteInput from "./AutoCompleteInput";
 import FilterSearchList, { type FilterType } from "./FilterSearchList";
@@ -100,6 +104,10 @@ const FilterSearch: React.FC = () => {
                 )?.filter || null,
               );
             }
+
+            if (value.length === 0) {
+              setFocusedElement(null);
+            }
           }}
           autoComplete={autoComplete}
         />
@@ -124,6 +132,12 @@ const FilterSearch: React.FC = () => {
                 <FilterSearchList
                   key="filter-search-list"
                   filters={filterdFilters}
+                  onItemClick={(element, value) => {
+                    setValue(value);
+
+                    inputRef.current?.focus();
+                    setFocusedElement(element);
+                  }}
                 />
 
                 <FilterSearchResultList
@@ -131,11 +145,41 @@ const FilterSearch: React.FC = () => {
                   key="filter-search-result-list"
                 />
               </FocusableList>
+              <div className="mt-2 flex items-center justify-between space-x-2 bg-gray-50 px-2 py-1">
+                <ShortcutInfo
+                  shortcut={
+                    <span className="flex items-center space-x-0.5">
+                      <ArrowSmallUpIcon className="h-3 w-3" />
+                      <ArrowSmallDownIcon className="h-3 w-3" />
+                    </span>
+                  }
+                  description="select"
+                />
+                <ShortcutInfo shortcut="Tab" description="autocomplete" />
+                <ShortcutInfo shortcut="Enter" description="select" />
+                <ShortcutInfo shortcut="ESC" description="hide" />
+              </div>
             </div>
           </Portal.Root>
         )}
       </ClientOnly>
     </>
+  );
+};
+
+interface ShortcutInfoProps {
+  shortcut: ReactNode;
+  description: string;
+}
+
+const ShortcutInfo: React.FC<ShortcutInfoProps> = (props) => {
+  return (
+    <span className="flex flex-nowrap items-center space-x-1.5 whitespace-nowrap text-xs text-gray-500">
+      <span className="rounded-md bg-gray-200 px-1.5 py-0.5">
+        {props.shortcut}
+      </span>
+      <span>{props.description}</span>
+    </span>
   );
 };
 

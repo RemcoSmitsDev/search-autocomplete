@@ -28,7 +28,7 @@ const SearchParser = (search: string): SearchQuery | null => {
   if (/<|>|=/.test(filterValue.substring(0, 1))) {
     filterOperator = filterValue.substring(0, 1);
     filterValue = filterValue.substring(1, filterValue.length).trim();
-  } else if (typeof filterValue === "string" && filterValue.includes("..")) {
+  } else if (filterValue.includes("..")) {
     filterOperator = "<=>";
   } else {
     throw new Error("invalid search");

@@ -11,6 +11,7 @@ export interface FilterType {
 
 interface FilterSearchListProps {
   filters: Array<FilterType>;
+  onItemClick: (element: HTMLElement, filter: string) => void;
 }
 
 const FilterSearchList: React.FC<FilterSearchListProps> = (props) => {
@@ -21,6 +22,7 @@ const FilterSearchList: React.FC<FilterSearchListProps> = (props) => {
           key={filter.filter}
           data-filter={filter.filter}
           aria-description={filter.name}
+          onClick={(e) => props.onItemClick(e.currentTarget, filter.filter)}
         >
           <span className="inline-flex w-full flex-grow items-center justify-between p-1.5">
             <span className="inline-block rounded-md bg-gray-100 px-1.5 py-0.5 text-xs font-light group-hover:bg-gray-50 group-data-[selected]:bg-gray-50">

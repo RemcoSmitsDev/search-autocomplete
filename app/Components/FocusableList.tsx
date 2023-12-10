@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
   type HTMLAttributes,
-  type MutableRefObject,
   type ReactNode,
 } from "react";
 
@@ -73,6 +72,7 @@ const FocusableListItem: React.FC<ListItemProps> = (props) => {
 
   return (
     <motion.li
+      onClick={(e) => context.setFocusedElement(e.currentTarget)}
       {...props}
       {...attributes}
       ref={ref}
@@ -82,9 +82,26 @@ const FocusableListItem: React.FC<ListItemProps> = (props) => {
       initial={{ height: 0 }}
       animate={{ height: "auto" }}
       exit={{ height: 0 }}
-      onClick={(e) => {
-        props?.onClick && props?.onClick(e);
-        context.setFocusedElement(e.currentTarget);
+      onKeyDown={(e) => {
+        if (e.code === "ArrowDown") {
+          context.setFocusedElement(
+            findNextFocusableElement(
+              context.focusedElement?.nextElementSibling || e.currentTarget,
+              e.currentTarget.parentElement as HTMLUListElement,
+            ),
+          );
+
+          e.preventDefault();
+        } else if (e.code === "ArrowUp") {
+          context.setFocusedElement(
+            findPreviousFocusableElement(
+              context.focusedElement?.previousElementSibling || e.currentTarget,
+              e.currentTarget.parentElement as HTMLUListElement,
+            ),
+          );
+
+          e.preventDefault();
+        }
       }}
       className="group cursor-pointer overflow-hidden bg-white text-sm hover:bg-indigo-400 data-[selected]:bg-indigo-400"
     />
@@ -96,7 +113,7 @@ const findNextFocusableElement = (
   list: HTMLUListElement | null,
 ): HTMLElement | null => {
   if (element instanceof HTMLElement === false) {
-    return list?.querySelector("li") as HTMLElement;
+    return (list?.querySelector("li") || null) as HTMLElement | null;
   }
 
   if (element?.nodeName === "LI" && element.hidden === false) {
@@ -114,7 +131,9 @@ const findPreviousFocusableElement = (
   list: HTMLUListElement | null,
 ): HTMLElement | null => {
   if (element instanceof HTMLElement === false) {
-    return list?.querySelector("li") as HTMLElement;
+    const childItems = list?.querySelectorAll("li") || [];
+
+    return (childItems[childItems.length - 1] || null) as HTMLElement | null;
   }
 
   if (element?.nodeName === "LI" && element.hidden === false) {
