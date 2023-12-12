@@ -30,7 +30,6 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        <div id="portal-container" />
       </body>
     </html>
   );
