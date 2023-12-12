@@ -103,8 +103,10 @@ const FocusableListItem: React.FC<ListItemProps> = (props) => {
           e.preventDefault();
         }
       }}
-      className="group cursor-pointer overflow-hidden bg-white text-sm hover:bg-indigo-400 data-[selected]:bg-indigo-400"
-    />
+      className="group relative z-10 cursor-pointer overflow-hidden bg-white text-sm hover:bg-indigo-400 data-[selected]:bg-indigo-400"
+    >
+      {props.children}
+    </motion.li>
   );
 };
 
