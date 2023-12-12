@@ -11,7 +11,7 @@ export interface FilterType {
 
 interface FilterSearchListProps {
   filters: Array<FilterType>;
-  onItemClick: (element: HTMLElement, filter: string) => void;
+  onItemClick: (element: HTMLLIElement, filter: string) => void;
 }
 
 const FilterSearchList: React.FC<FilterSearchListProps> = (props) => {
