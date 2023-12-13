@@ -56,7 +56,7 @@ const AutoCompleteInput = forwardRef<HTMLInputElement, AutoCompleteInputProps>(
             }
           }}
           placeholder={autoComplete ? undefined : "Search..."}
-          className="boder-gray-200 w-full rounded-md border px-3 py-2 text-sm text-gray-700 focus:border-gray-300 focus:outline-none"
+          className="boder-gray-200 w-full rounded-md border py-2 pl-3 pr-8 text-sm text-gray-700 focus:border-gray-300 focus:outline-none"
         />
       </div>
     );
