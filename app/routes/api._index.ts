@@ -2,33 +2,59 @@ import { type LoaderFunctionArgs, json } from "@remix-run/node";
 
 const orders = [
   {
-    id: "pi_1Ge4kEGzJT0kic6Bv8amuSHJ",
+    id: "b26955c1-d946-4761-bacc-84642cdaa36d",
     amount: 10,
     currency: "EUR",
+    status: "authorised",
+  },
+  {
+    id: "5b7d8e6e-d58c-4af1-96f1-0d0ed5b827d2",
+    amount: 500,
+    currency: "EUR",
+    status: "pending",
+  },
+  {
+    id: "22bf2dd0-0a3f-4a38-bc5d-5536b7e7c750",
+    amount: 9,
+    currency: "USD",
     status: "captured",
   },
   {
-    id: "pi_1Ghajsdkha0kic6Bv8amuSHJ",
-    amount: 500,
+    id: "9f0c8296-a8bb-44fc-903a-0c02a7546782",
+    amount: 320,
     currency: "USD",
-    status: "pending",
+    status: "initialised",
   },
 ] as const;
 
 const payments = [
   {
-    id: "pi_1Ge4kEGzJT0kic6Bv8amuSHJ",
+    id: "4980a59c-7dcd-45ce-9470-ad4dd9c51171",
     amount: 100,
     currency: "EUR",
-    paymentMethod: "klarna",
+    paymentMethod: "visa",
     status: "captured",
   },
   {
-    id: "pi_1Ghajsdkha0kic6Bv8amuSHJ",
+    id: "8d36d130-d2a8-4919-bc66-d7464b696c36",
     amount: 5,
     currency: "USD",
     paymentMethod: "ideal",
     status: "pending",
+  },
+  {
+    id: "713dd187-bf45-448a-8c00-398208a09be1",
+    amount: 80,
+    currency: "EUR",
+    paymentMethod: "mastercard",
+    status: "authorised",
+  },
+  {
+    id: "5b38c398-56ce-481a-994e-00d144248994",
+    amount: 120,
+    currency: "USD",
+    paymentMethod: "paypal",
+    status: "captured",
   },
 ] as const;
 
