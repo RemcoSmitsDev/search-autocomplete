@@ -30,8 +30,6 @@ const SearchParser = (search: string): SearchQuery | null => {
     filterValue = filterValue.substring(1, filterValue.length).trim();
   } else if (filterValue.includes("..")) {
     filterOperator = "<=>";
-  } else {
-    throw new Error("invalid search");
   }
 
   return {
